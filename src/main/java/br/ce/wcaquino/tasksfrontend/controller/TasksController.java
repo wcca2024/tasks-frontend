@@ -1,4 +1,4 @@
-package br.ce.wcaquino.tasksfrontend.controller;
+package br.ce.wcaquino.tasksfrontend.controller; 
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -27,7 +27,7 @@ public class TasksController {
 	private String VERSION;
 	
 	public String getBackendURL() {
-		return "http://" + BACKEND_HOST + ":" + BACKEND_PORT;
+		return "http://" + BACKEND_HOST + ":" + BACKEND_PORT + "/tasks-backend";
 	}
 	
 	@GetMapping("")
@@ -49,7 +49,7 @@ public class TasksController {
 		try {
 			RestTemplate restTemplate = new RestTemplate();
 			restTemplate.postForObject(
-					getBackendURL() + "/tasks-backend/todo", todo, Object.class);			
+					getBackendURL() + "/todo", todo, Object.class);			
 			model.addAttribute("sucess", "Sucess!");
 			return "index";
 		} catch(Exception e) {
@@ -67,7 +67,7 @@ public class TasksController {
 	@GetMapping("delete/{id}")
 	public String delete(@PathVariable Long id, Model model) {
 		RestTemplate restTemplate = new RestTemplate();
-		restTemplate.delete(getBackendURL() + "/tasks-backend/todo/" + id);			
+		restTemplate.delete(getBackendURL() + "/todo/" + id);			
 		model.addAttribute("success", "Success!");
 		model.addAttribute("todos", getTodos());
 		return "index";
@@ -78,6 +78,6 @@ public class TasksController {
 	private List<Todo> getTodos() {
 		RestTemplate restTemplate = new RestTemplate();
 		return restTemplate.getForObject(
-				getBackendURL() + "/tasks-backend/todo", List.class);
+				getBackendURL() + "/todo", List.class);
 	}
 }
